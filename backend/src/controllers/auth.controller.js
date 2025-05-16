@@ -85,6 +85,7 @@ const updateProfile = async (req,res) => {
   try {
     const {profilePic} = req.body;
     const userId = req.user._id;
+
     if(!profilePic){
       return res.status(404).json({message: "Please provide a profile picture"});
     }
@@ -99,12 +100,13 @@ const updateProfile = async (req,res) => {
 }
 
 const checkAuth = async (req,res) => {
-  try {
-     console.log("User in checkAuth controller", req.users);
-     await res.status(200).json(req.users);
+    try {
+      const { _id, fullname, email, profilePic } = req.user;
+      console.log("User in checkAuth controller", req.user);
+      res.status(200).json({ _id, fullname, email, profilePic });
   } catch (error) {
-    //console.log("User in checkAuth controller", req.user);
-     res.status(500).json({message: "Internal server error"});
+    console.log("Error in checkAuth controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
