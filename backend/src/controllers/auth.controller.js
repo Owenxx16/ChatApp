@@ -102,7 +102,6 @@ const updateProfile = async (req,res) => {
 const checkAuth = async (req,res) => {
     try {
       const { _id, fullname, email, profilePic } = req.user;
-      console.log("User in checkAuth controller", req.user);
       res.status(200).json({ _id, fullname, email, profilePic });
   } catch (error) {
     console.log("Error in checkAuth controller", error.message);
