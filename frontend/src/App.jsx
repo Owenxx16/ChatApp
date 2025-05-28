@@ -8,14 +8,16 @@ import ProfilePage from './pages/ProfilePage'
 import Navbar from './components/Navbar'
 import {useAuthStore} from './store/useAuthStore'
 import {Loader} from 'lucide-react'
+import { Toaster } from 'react-hot-toast'
 const App = () => {
-  const {userAuth, checkAuth, isCheckingAuth} = useAuthStore();
+  const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth])
-  console.log({userAuth});
+  
+  console.log({authUser});
 
-  if(isCheckingAuth && !userAuth){
+  if(isCheckingAuth && !authUser){
     <div className='flex items-center justify-center h-sreen'>
       <Loader className='size-10 animate-spin text-blue-500' />
     </div>
@@ -24,12 +26,13 @@ const App = () => {
     <div className='bg-blue-800 min-h-screen'>
       <Navbar />
       <Routes>
-        <Route path='/' element={userAuth ? <HomePage /> : <Navigate to="/login"/> } />
-        <Route path='/login' element={!userAuth ? <Login /> : <Navigate to="/" />} />
-        <Route path='/signup' element={!userAuth ? <Signup /> : <Navigate to="/" /> } />
+        <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login"/> } />
+        <Route path='/login' element={!authUser ? <Login /> : <Navigate to="/" />} />
+        <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to="/" /> } />
         <Route path='/setting' element={ <SettingPage /> } />
-        <Route path='/profile' element={userAuth ? <ProfilePage /> : <Navigate to="/login" />} />
+        <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
       </Routes>
+      <Toaster position='top-center' />
     </div>
   )
 }
