@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const {generateToken} = require("../lib/utils");
-const cloudinary = require("../lib/cloudinary");
+const {cloudinary} = require("../lib/cloudinary");
 const signup = async (req,res) => {
  const {fullname,email,password} = req.body;
  try {
@@ -42,7 +42,7 @@ const signup = async (req,res) => {
 }
 
 const login = async (req,res) => {
-  const {email, password} = req.body;
+  const {email,password} = req.body;
   try{
     if(!email || !password){
       return res.status(400).json({message: "Please fill all the fields"});
@@ -101,8 +101,8 @@ const updateProfile = async (req,res) => {
 
 const checkAuth = async (req,res) => {
     try {
-      const { _id, fullname, email, profilePic, createdAt } = req.user;
-      res.status(200).json({ _id, fullname, email, profilePic, createdAt });
+      const { _id, fullname, email, profilePic } = req.user;
+      res.status(200).json({ _id, fullname, email, profilePic });
   } catch (error) {
     console.log("Error in checkAuth controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
