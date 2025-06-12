@@ -11,6 +11,7 @@ const ProfilePage = () => {
 
     const reader = new FileReader();
     reader.readAsDataURL(files);
+    
     reader.onload = async () => {
       const base64Image = reader.result;
       setSelectedImage(base64Image);
